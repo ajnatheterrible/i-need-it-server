@@ -1,0 +1,20 @@
+# Logs
+logs
+*.log
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Editor settings
+.vscode/
+.idea/
+.DS_Store
+
+# OS junk
+Thumbs.db
