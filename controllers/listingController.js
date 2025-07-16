@@ -1,46 +1,52 @@
 import Listing from "../models/Listing.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import createError from "../utils/createError.js";
+import client from "../meili/meili.js";
 
 export const getFeedListings = asyncHandler(async (req, res) => {
   const { query, department, category, condition, size, priceMin, priceMax } =
     req.query;
 
-  const filter = { $and: [] };
+  const meiliFilters = [];
 
-  if (query) {
-    const terms = query.split(" ").map((word) => new RegExp(word, "i"));
-    filter.$and.push(
-      ...terms.map((term) => ({
-        $or: [
-          { title: term },
-          { designer: term },
-          { description: term },
-          { tags: term },
-          { category: term },
-          { department: term },
-        ],
-      }))
-    );
-  }
+  const addFilter = (key, value) => {
+    const values = value
+      .split(",")
+      .map((v) => `"${v.trim()}"`)
+      .join(", ");
+    meiliFilters.push(`${key} IN [${values}]`);
+  };
 
-  if (department)
-    filter.$and.push({ department: { $in: department.split(",") } });
-  if (category) filter.$and.push({ category: { $in: category.split(",") } });
-  if (size) filter.$and.push({ size: { $in: size.split(",") } });
-  if (condition) filter.$and.push({ condition: { $in: condition.split(",") } });
+  if (department) addFilter("department", department);
+  if (category) addFilter("category", category);
+  if (size) addFilter("size", size);
+  if (condition) addFilter("condition", condition);
 
   if (priceMin || priceMax) {
-    const priceFilter = {};
-    if (priceMin) priceFilter.$gte = parseFloat(priceMin);
-    if (priceMax) priceFilter.$lte = parseFloat(priceMax);
-    filter.$and.push({ price: priceFilter });
+    if (priceMin && priceMax) {
+      meiliFilters.push(`price >= ${priceMin} AND price <= ${priceMax}`);
+    } else if (priceMin) {
+      meiliFilters.push(`price >= ${priceMin}`);
+    } else if (priceMax) {
+      meiliFilters.push(`price <= ${priceMax}`);
+    }
   }
 
-  if (filter.$and.length === 0) delete filter.$and;
+  const searchOptions = {
+    filter: meiliFilters.length ? meiliFilters.join(" AND ") : undefined,
+    limit: 100,
+  };
 
-  const listings = await Listing.find(filter);
-  res.json(listings);
+  console.log("Meilisearch Query Debug:", {
+    query: query || "",
+    filter: searchOptions.filter,
+  });
+
+  const results = await client
+    .index("listings")
+    .search(query || "", searchOptions);
+
+  res.json(results.hits);
 });
 
 export const getListingById = asyncHandler(async (req, res) => {
