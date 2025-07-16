@@ -37,11 +37,6 @@ export const getFeedListings = asyncHandler(async (req, res) => {
     limit: 100,
   };
 
-  console.log("Meilisearch Query Debug:", {
-    query: query || "",
-    filter: searchOptions.filter,
-  });
-
   const results = await client
     .index("listings")
     .search(query || "", searchOptions);

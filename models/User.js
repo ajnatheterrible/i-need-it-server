@@ -65,7 +65,16 @@ const UserSchema = new mongoose.Schema(
       index: true,
     },
     settings: {
-      address: { type: String, default: "" },
+      address: {
+        fullName: { type: String, default: "" },
+        line1: { type: String, default: "" },
+        line2: { type: String, default: "" },
+        city: { type: String, default: "" },
+        state: { type: String, default: "" },
+        zip: { type: String, default: "" },
+        country: { type: String, default: "" },
+        phone: { type: String, default: "" },
+      },
       paymentMethod: { type: String, default: "" },
       favoritesPublic: { type: Boolean, default: true },
       closetPublic: { type: Boolean, default: false },

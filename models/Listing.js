@@ -46,7 +46,62 @@ const ListingSchema = new mongoose.Schema(
     },
     thumbnail: String,
     isFreeShipping: { type: Boolean, default: false },
-    shippingCost: { type: Number, default: 0 },
+    shippingFrom: {
+      type: new mongoose.Schema(
+        {
+          fullName: { type: String, required: true },
+          line1: { type: String, required: true },
+          line2: { type: String },
+          city: { type: String, required: true },
+          state: { type: String, required: true },
+          zip: { type: String, required: true },
+          country: { type: String, required: true },
+          phone: { type: String },
+        },
+        { _id: false }
+      ),
+      required() {
+        return !this.isDraft;
+      },
+    },
+    shippingRegions: {
+      type: [
+        {
+          region: {
+            type: String,
+            enum: [
+              "United States",
+              "Canada",
+              "United Kingdom",
+              "Europe",
+              "Asia",
+              "Australia / NZ",
+              "Other",
+            ],
+          },
+          cost: {
+            type: Number,
+            min: 0,
+          },
+          enabled: {
+            type: Boolean,
+            default: false,
+          },
+        },
+      ],
+      validate: {
+        validator(value) {
+          if (this.isDraft) return true;
+          if (!Array.isArray(value)) return false;
+
+          return value.some((region) => region.enabled === true);
+        },
+        message: "At least one shipping region must be enabled.",
+      },
+      required() {
+        return !this.isDraft;
+      },
+    },
     department: {
       type: String,
       enum: ["Menswear", "Womenswear"],
@@ -167,6 +222,15 @@ const ListingSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+ListingSchema.pre("validate", function (next) {
+  if (this.isFreeShipping && Array.isArray(this.shippingRegions)) {
+    this.shippingRegions.forEach((region) => {
+      if (region.enabled) region.cost = 0;
+    });
+  }
+  next();
+});
 
 const Listing = mongoose.model("Listing", ListingSchema);
 export default Listing;
