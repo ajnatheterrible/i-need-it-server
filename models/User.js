@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
+const clothingSizes = ["XS", "S", "M", "L", "XL"];
+const footwearSizes = ["37", "38", "39", "40", "41", "42", "43", "44", "45"];
+
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -54,6 +57,19 @@ const UserSchema = new mongoose.Schema(
       maxlength: 500,
       default: "",
     },
+    location: {
+      type: String,
+      enum: [
+        "United States",
+        "Canada",
+        "United Kingdom",
+        "Europe",
+        "Asia",
+        "Australia / NZ",
+        "Other",
+      ],
+      default: null,
+    },
     isDemo: {
       type: Boolean,
       default: false,
@@ -82,22 +98,18 @@ const UserSchema = new mongoose.Schema(
       followingPublic: { type: Boolean, default: true },
       sizes: {
         menswear: {
-          Tops: [String],
-          Bottoms: [String],
-          Outerwear: [String],
-          Footwear: [String],
-          Tailoring: [String],
-          Accessories: [String],
+          Tops: [{ type: String, enum: clothingSizes }],
+          Bottoms: [{ type: String, enum: clothingSizes }],
+          Outerwear: [{ type: String, enum: clothingSizes }],
+          Footwear: [{ type: String, enum: footwearSizes }],
+          Tailoring: [{ type: String, enum: clothingSizes }],
         },
         womenswear: {
-          Tops: [String],
-          Bottoms: [String],
-          Outerwear: [String],
-          Footwear: [String],
-          Dresses: [String],
-          Accessories: [String],
-          Bags: [String],
-          Jewelry: [String],
+          Tops: [{ type: String, enum: clothingSizes }],
+          Bottoms: [{ type: String, enum: clothingSizes }],
+          Outerwear: [{ type: String, enum: clothingSizes }],
+          Footwear: [{ type: String, enum: footwearSizes }],
+          Dresses: [{ type: String, enum: clothingSizes }],
         },
       },
     },

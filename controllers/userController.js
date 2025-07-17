@@ -104,3 +104,107 @@ export const getForSale = asyncHandler(async (req, res) => {
 
   res.status(200).json(listings);
 });
+
+export const updateUserProfileSettings = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { username, location, privacy } = req.body;
+
+  if (username) user.username = username;
+  if (location) user.location = location;
+
+  if (privacy) {
+    const { favoritesPublic, closetPublic, followersPublic, followingPublic } =
+      privacy;
+
+    if (typeof favoritesPublic === "boolean")
+      user.settings.favoritesPublic = favoritesPublic;
+    if (typeof closetPublic === "boolean")
+      user.settings.closetPublic = closetPublic;
+    if (typeof followersPublic === "boolean")
+      user.settings.followersPublic = followersPublic;
+    if (typeof followingPublic === "boolean")
+      user.settings.followingPublic = followingPublic;
+  }
+
+  await user.save();
+
+  res.status(200).json({ message: "Profile updated", user });
+});
+
+export const addUserAddress = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const newAddress = req.body;
+
+  if (!user.addresses) user.addresses = [];
+  user.addresses.push(newAddress);
+  await user.save();
+
+  res.status(201).json({ message: "Address added", addresses: user.addresses });
+});
+
+export const updateUserAddress = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { addressId } = req.params;
+  const updatedData = req.body;
+
+  const address = user.addresses.id(addressId);
+  if (!address) throw createError("Address not found", 404);
+
+  Object.assign(address, updatedData);
+  await user.save();
+
+  res.status(200).json({ message: "Address updated", address });
+});
+
+export const deleteUserAddress = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { addressId } = req.params;
+
+  user.addresses = user.addresses.filter(
+    (addr) => addr._id.toString() !== addressId
+  );
+  await user.save();
+
+  res
+    .status(200)
+    .json({ message: "Address deleted", addresses: user.addresses });
+});
+
+export const setDefaultReturnAddress = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { addressId } = req.body;
+
+  const exists = user.addresses.some(
+    (addr) => addr._id.toString() === addressId
+  );
+  if (!exists) throw createError("Address not found", 404);
+
+  user.settings.defaultReturnAddressId = addressId;
+  await user.save();
+
+  res.status(200).json({ message: "Default return address set" });
+});
+
+export const addPaymentMethod = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const newCard = req.body;
+
+  if (!user.paymentMethods) user.paymentMethods = [];
+  user.paymentMethods.push(newCard);
+  await user.save();
+
+  res.status(201).json({ message: "Card added", cards: user.paymentMethods });
+});
+
+export const removePaymentMethod = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { cardId } = req.params;
+
+  user.paymentMethods = user.paymentMethods.filter(
+    (card) => card._id.toString() !== cardId
+  );
+
+  await user.save();
+
+  res.status(200).json({ message: "Card removed", cards: user.paymentMethods });
+});

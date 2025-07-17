@@ -143,14 +143,13 @@ const ListingSchema = new mongoose.Schema(
     size: {
       type: String,
       enum: [
-        "XXS",
         "XS",
         "S",
         "M",
         "L",
         "XL",
-        "XXL",
         "One Size",
+        "37",
         "38",
         "39",
         "40",
