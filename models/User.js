@@ -57,19 +57,6 @@ const UserSchema = new mongoose.Schema(
       maxlength: 500,
       default: "",
     },
-    location: {
-      type: String,
-      enum: [
-        "United States",
-        "Canada",
-        "United Kingdom",
-        "Europe",
-        "Asia",
-        "Australia / NZ",
-        "Other",
-      ],
-      default: null,
-    },
     isDemo: {
       type: Boolean,
       default: false,
@@ -91,11 +78,24 @@ const UserSchema = new mongoose.Schema(
         country: { type: String, default: "" },
         phone: { type: String, default: "" },
       },
-      paymentMethod: { type: String, default: "" },
       favoritesPublic: { type: Boolean, default: true },
       closetPublic: { type: Boolean, default: false },
       followersPublic: { type: Boolean, default: true },
       followingPublic: { type: Boolean, default: true },
+      location: {
+        type: String,
+        enum: [
+          "United States",
+          "Canada",
+          "United Kingdom",
+          "Europe",
+          "Asia",
+          "Australia / NZ",
+          "Other",
+        ],
+        default: null,
+      },
+      paymentMethod: { type: String, default: "" },
       sizes: {
         menswear: {
           Tops: [{ type: String, enum: clothingSizes }],
@@ -112,6 +112,7 @@ const UserSchema = new mongoose.Schema(
           Dresses: [{ type: String, enum: clothingSizes }],
         },
       },
+      lastUsernameChange: { type: Date },
     },
     favorites: [
       {
@@ -145,6 +146,23 @@ const UserSchema = new mongoose.Schema(
     },
     resetPasswordExpires: {
       type: Date,
+    },
+    pendingEmail: {
+      type: String,
+      lowercase: true,
+      trim: true,
+      default: null,
+    },
+
+    pendingEmailToken: {
+      type: String,
+      index: true,
+      default: null,
+    },
+
+    pendingEmailExpires: {
+      type: Date,
+      default: null,
     },
     isDeleted: {
       type: Boolean,
