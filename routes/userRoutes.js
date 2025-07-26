@@ -13,6 +13,10 @@ import {
   getUserSettings,
   requestEmailChange,
   confirmEmailChange,
+  addNewAddress,
+  getAddresses,
+  deleteAddress,
+  editAddress,
 } from "../controllers/userController.js";
 
 import requireAuth from "../middleware/requireAuth.js";
@@ -32,5 +36,9 @@ router.put("/update-privacy-settings", requireAuth, updatePrivacySettings);
 router.put("/update-username", requireAuth, updateUsername);
 router.post("/request-email-change", requireAuth, requestEmailChange);
 router.get("/confirm-email-change", confirmEmailChange);
+router.get("/addresses", requireAuth, getAddresses);
+router.post("/addresses", requireAuth, addNewAddress);
+router.put("/addresses/:id", requireAuth, editAddress);
+router.delete("/addresses/:id", requireAuth, deleteAddress);
 
 export default router;

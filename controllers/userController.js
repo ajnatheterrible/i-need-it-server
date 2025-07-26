@@ -9,7 +9,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const getUserFavorites = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id).populate("favorites");
-  if (!user) throw createError("User not found", 404);
   res.status(200).json(user.favorites);
 });
 
@@ -18,15 +17,9 @@ export const addFavorite = asyncHandler(async (req, res) => {
   const { listingId } = req.params;
 
   const listing = await Listing.findById(listingId);
-
-  if (!listing) {
-    return res.status(404).json({ message: "Listing not found" });
-  }
-
+  if (!listing) throw createError("Listing not found", 404);
   if (listing.seller.toString() === user._id.toString()) {
-    return res
-      .status(400)
-      .json({ message: "Cannot favorite your own listing" });
+    throw createError("Cannot favorite your own listing", 400);
   }
 
   if (!user.favorites.includes(listingId)) {
@@ -36,7 +29,6 @@ export const addFavorite = asyncHandler(async (req, res) => {
   }
 
   const updatedUser = await user.populate("favorites");
-
   res.status(200).json({
     message: "Added to favorites",
     favorites: updatedUser.favorites,
@@ -48,13 +40,9 @@ export const removeFavorite = asyncHandler(async (req, res) => {
   const { listingId } = req.params;
 
   const listing = await Listing.findById(listingId);
-
-  if (!listing) {
-    return res.status(404).json({ message: "Listing not found" });
-  }
+  if (!listing) throw createError("Listing not found", 404);
 
   const wasFavorited = user.favorites.includes(listingId);
-
   if (wasFavorited) {
     user.favorites = user.favorites.filter(
       (fav) => fav.toString() !== listingId
@@ -64,7 +52,6 @@ export const removeFavorite = asyncHandler(async (req, res) => {
   }
 
   const updatedUser = await user.populate("favorites");
-
   res.status(200).json({
     message: "Removed from favorites",
     favorites: updatedUser.favorites,
@@ -72,8 +59,7 @@ export const removeFavorite = asyncHandler(async (req, res) => {
 });
 
 export const getUserSizes = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).select("settings.sizes");
-  if (!user) throw createError("User not found", 404);
+  const user = req.user;
   res.status(200).json(user.settings.sizes || {});
 });
 
@@ -96,15 +82,16 @@ export const updateUserSizes = asyncHandler(async (req, res) => {
 
 export const getForSale = asyncHandler(async (req, res) => {
   const user = req.user;
-  if (!user) throw createError("User not found", 404);
 
   const listings = await Listing.find({
     seller: user._id,
     isDraft: false,
     isSold: false,
   });
-  if (!listings.length)
+
+  if (!listings.length) {
     throw createError("No active listings from this seller", 404);
+  }
 
   res.status(200).json(listings);
 });
@@ -130,7 +117,6 @@ export const updatePrivacySettings = asyncHandler(async (req, res) => {
   }
 
   await user.save();
-
   res.status(200).json({ message: "Profile updated", user });
 });
 
@@ -175,12 +161,7 @@ export const updateUsername = asyncHandler(async (req, res) => {
 });
 
 export const isUsernameAvailable = asyncHandler(async (req, res) => {
-  const user = req.user;
   const { username } = req.query;
-
-  if (!user) {
-    throw createError("Unauthorized", 401);
-  }
 
   if (!username || username.trim().length === 0) {
     throw createError("Username is required", 400);
@@ -188,22 +169,15 @@ export const isUsernameAvailable = asyncHandler(async (req, res) => {
 
   const existingUser = await User.findOne({ username: username.trim() });
 
-  if (existingUser) {
-    return res
-      .status(200)
-      .json({ message: "Username is taken", available: false });
-  }
-
-  res.status(200).json({ message: "Username is available", available: true });
+  res.status(200).json({
+    message: existingUser ? "Username is taken" : "Username is available",
+    available: !existingUser,
+  });
 });
 
 export const isEmailAvailable = asyncHandler(async (req, res) => {
   const user = req.user;
   const { email } = req.query;
-
-  if (!user) {
-    throw createError("Unauthorized", 401);
-  }
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
     throw createError("A valid email is required", 400);
@@ -211,14 +185,14 @@ export const isEmailAvailable = asyncHandler(async (req, res) => {
 
   const existingUser = await User.findOne({ email: email.trim() });
 
-  if (existingUser && existingUser._id.toString() !== user._id.toString()) {
-    return res.status(200).json({
-      message: "This email is already associated with another account",
-      available: false,
-    });
-  }
-
-  res.status(200).json({ available: true });
+  res.status(200).json({
+    available:
+      !existingUser || existingUser._id.toString() === user._id.toString(),
+    message:
+      existingUser && existingUser._id.toString() !== user._id.toString()
+        ? "This email is already associated with another account"
+        : "Email is available",
+  });
 });
 
 export const getUserSettings = asyncHandler(async (req, res) => {
@@ -284,11 +258,7 @@ export const requestEmailChange = asyncHandler(async (req, res) => {
 
 export const confirmEmailChange = asyncHandler(async (req, res) => {
   const { token } = req.query;
-  console.log(req.query.token);
-
-  if (!token) {
-    throw createError("Invalid or missing token", 400);
-  }
+  if (!token) throw createError("Invalid or missing token", 400);
 
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
@@ -309,4 +279,150 @@ export const confirmEmailChange = asyncHandler(async (req, res) => {
   await user.save();
 
   res.status(200).json({ message: "Email updated successfully", user });
+});
+
+export const addNewAddress = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const newAddress = req.body;
+
+  const {
+    fullName,
+    line1,
+    city,
+    state,
+    country,
+    zip,
+    isDefaultShipping,
+    isDefaultPurchase,
+  } = newAddress || {};
+  if (!fullName || !line1 || !city || !state || !country || !zip) {
+    throw createError("Missing required fields", 400);
+  }
+
+  if (!user.settings.addresses) user.settings.addresses = [];
+
+  if (isDefaultShipping) {
+    user.settings.addresses = user.settings.addresses.map((address) => ({
+      ...address,
+      isDefaultShipping: false,
+    }));
+  } else {
+    const hasDefaultShipping = user.settings.addresses.some(
+      (address) => address.isDefaultShipping === true
+    );
+
+    if (!hasDefaultShipping) {
+      newAddress.isDefaultShipping = true;
+    }
+  }
+
+  if (isDefaultPurchase) {
+    user.settings.addresses = user.settings.addresses.map((address) => ({
+      ...address,
+      isDefaultPurchase: false,
+    }));
+  } else {
+    const hasDefaultPurchase = user.settings.addresses.some(
+      (address) => address.isDefaultPurchase === true
+    );
+    if (!hasDefaultPurchase) {
+      newAddress.isDefaultPurchase = true;
+    }
+  }
+
+  const normalize = (str) => (str || "").trim().toLowerCase();
+
+  const isDuplicate = user.settings.addresses.some((address) => {
+    return (
+      normalize(address.fullName) === normalize(newAddress.fullName) &&
+      normalize(address.line1) === normalize(newAddress.line1) &&
+      normalize(address.line2) === normalize(newAddress.line2) &&
+      normalize(address.city) === normalize(newAddress.city) &&
+      normalize(address.state) === normalize(newAddress.state) &&
+      normalize(address.country) === normalize(newAddress.country) &&
+      normalize(address.zip) === normalize(newAddress.zip) &&
+      normalize(address.phone) === normalize(newAddress.phone)
+    );
+  });
+
+  if (isDuplicate) {
+    throw createError("This address already exists", 400);
+  }
+
+  user.settings.addresses.push(newAddress);
+  await user.save();
+
+  res.status(201).json(user.settings.addresses);
+});
+
+export const editAddress = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+
+  if (!id || !user.settings.addresses) {
+    throw createError("Couldn't edit address", 400);
+  }
+
+  const exists = user.settings.addresses.some(
+    (address) => address._id.toString() === id
+  );
+
+  if (!exists) {
+    throw createError("Address not found", 404);
+  }
+
+  const isDefaultShipping = req.body.isDefaultShipping === true;
+  const isDefaultPurchase = req.body.isDefaultPurchase === true;
+
+  if (isDefaultShipping) {
+    user.settings.addresses = user.settings.addresses.map((address) => ({
+      ...address,
+      isDefaultShipping: false,
+    }));
+  }
+
+  if (isDefaultPurchase) {
+    user.settings.addresses = user.settings.addresses.map((address) => ({
+      ...address,
+      isDefaultPurchase: false,
+    }));
+  }
+
+  user.settings.addresses = user.settings.addresses.filter(
+    (address) => address._id.toString() !== id
+  );
+
+  user.settings.addresses.push({
+    ...req.body,
+    _id: id,
+    isDefaultShipping,
+    isDefaultPurchase,
+  });
+
+  await user.save();
+
+  res.status(200).json(user.settings.addresses);
+});
+
+export const deleteAddress = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+
+  if (!id || !user.settings.addresses) {
+    throw createError("Couldn't delete address", 400);
+  }
+
+  user.settings.addresses = user.settings.addresses.filter(
+    (address) => address._id.toString() !== id
+  );
+
+  await user.save();
+
+  res.status(200).json(user.settings?.addresses ?? null);
+});
+
+export const getAddresses = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  res.status(200).json(user.settings?.addresses ?? null);
 });

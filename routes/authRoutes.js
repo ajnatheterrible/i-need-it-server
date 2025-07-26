@@ -81,7 +81,7 @@ router.post("/cancel-google-signup", requireAuth, cancelGoogleSignup);
 router.patch("/complete-signup", requireAuth, patchUser);
 
 // Password reset
-router.post("/request-password-reset", requestPasswordReset);
+router.post("/request-password-reset", shorterLimiter, requestPasswordReset);
 router.post("/validate-reset-token", validateResetToken);
 router.post("/reset-password", resetPassword);
 
