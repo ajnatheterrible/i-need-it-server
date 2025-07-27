@@ -17,6 +17,7 @@ import {
   getAddresses,
   deleteAddress,
   editAddress,
+  getPurchases,
 } from "../controllers/userController.js";
 
 import requireAuth from "../middleware/requireAuth.js";
@@ -29,6 +30,7 @@ router.get("/favorites", requireAuth, getUserFavorites);
 router.post("/favorites/:listingId", requireAuth, addFavorite);
 router.delete("/favorites/:listingId", requireAuth, removeFavorite);
 router.get("/for-sale", requireAuth, getForSale);
+router.get("/purchases", requireAuth, getPurchases);
 router.get("/is-username-available", requireAuth, isUsernameAvailable);
 router.get("/is-email-available", requireAuth, isEmailAvailable);
 router.get("/settings", requireAuth, getUserSettings);

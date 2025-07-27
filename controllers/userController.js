@@ -96,6 +96,22 @@ export const getForSale = asyncHandler(async (req, res) => {
   res.status(200).json(listings);
 });
 
+export const getPurchases = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  const listings = await Listing.find({
+    buyer: user._id,
+    isDraft: false,
+    isSold: true,
+  }).populate("seller", "username");
+
+  if (!listings.length) {
+    throw createError("No active listings from this seller", 404);
+  }
+
+  res.status(200).json(listings);
+});
+
 export const updatePrivacySettings = asyncHandler(async (req, res) => {
   const user = req.user;
   const { location, privacy } = req.body;
