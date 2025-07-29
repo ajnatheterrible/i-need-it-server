@@ -14,7 +14,8 @@
     "tags": ["Avant-Garde", "Opium", "Goth"],
     "category": "Outerwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Leather Jackets",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -22,7 +23,54 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 120,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "SK30-M",
@@ -38,7 +86,8 @@
     "tags": ["Cyberpunk", "Futuristic", "Techwear"],
     "category": "Bottoms",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Cropped Pants",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": false,
     "isSold": false,
     "isDraft": false,
@@ -46,12 +95,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 24,
-    "countryOfOrigin": "China"
+    "countryOfOrigin": "China",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "J104U-WS softshell jacket",
     "designer": "Acronym",
-    "description": "SS25 J104U-WS. \n\nSold out instantly. \n\n 2L Gore-Tex Windstopper® \n\n Only respond to binding offers. \n\n Received 07/04/2025 ready to ship.",
+    "description": "SS25 J104U-WS. \n\nSold out instantly. \n\n 2L Gore-Tex Windstopper\u00ae \n\n Only respond to binding offers. \n\n Received 07/04/2025 ready to ship.",
     "price": 3999,
     "thumbnail": "https://placehold.co/400x500?text=Listing+7",
     "isFreeShipping": false,
@@ -60,9 +156,10 @@
     "color": "Black",
     "condition": "New/Never Worn",
     "tags": ["Oakley", "Techwear", "Cyber punk"],
-    "category": "Bottoms",
+    "category": "Outerwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Light Jackets",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -70,12 +167,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 921,
-    "countryOfOrigin": "China"
+    "countryOfOrigin": "China",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
-    "title": "Shine Luxury Studios “Nementhon” Layered Cargo Pants(Size L)",
+    "title": "Shine Luxury Studios \u201cNementhon\u201d Layered Cargo Pants(Size L)",
     "designer": "Shine Luxury Studios",
-    "description": "Condition: Unworn – tags included and never worn. \n \n Measurements (Size L laid flat): \n • Waist: 42 cm (≈16.5 in) \n • Outseam (total length): 114 cm (≈44.9 in) ￼ \n \n Why You’ll Love Them: \n  • Architectural silhouette: exaggerated flares balanced by adjustable drawcords at knee & hem. \n  • Utility chic: massive cargo pockets (thigh & back) keep your essentials close at hand. \n  • Premium black denim: subtle sheen with raw‐edge distressing gives that lived-in luxury. \n  • Signature DØL hardware: gunmetal eyelets, hidden zips & tab details for an industrial finish. \n  • Ultra-limited: part of Shine’s DØL drop—only 44 pieces made worldwide. \n \n Styling Notes: \n Pair with a sleek tank and chunky boots to play up the volume, or cinch the knees and wear with high-tops for a futuristic, cropped-flare look. \n \n ⸻ \n \n Hit me up with any questions or for more photos!",
+    "description": "Condition: Unworn \u2013 tags included and never worn. ...",
     "originalPrice": 675,
     "price": 546,
     "thumbnail": "https://placehold.co/400x500?text=Listing+8",
@@ -87,7 +231,8 @@
     "tags": ["ARCHIVE", "FUTURISTIC", "RARE"],
     "category": "Bottoms",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Casual Pants",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -95,12 +240,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 23,
-    "countryOfOrigin": "France"
+    "countryOfOrigin": "France",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "BALENCIAGA Le Cagole XS Leather Piercing Bag",
     "designer": "Balenciaga",
-    "description": "BALENCIAGA LE CAGOLE XS Shoulder Bag With Piercings In White\nIntroducing the Le Cagole XS Shoulder Bag from Balenciaga; an iconic silhouette with gathered details and punctuated by stud embellishments, perfect for expressing your style in an 'O0s-inspired way. This stylish bag is crafted from black leather and will surely be an instant classic beauty to be envied by many!\n* Dimensions: L10,2 x H6,3 x W2,7 inch\n* Arena lambskin with piercings\n* Shoulder bag\n* Adjustable shoulder strap (18,1 inch)\n* Leather braided shoulder pad\n* Zipped closure with knotted leather puller\n* Aged-silver hardware\n* 1 removable heart mirror\n* Tone-on-tone Balenciaga logo embossed on mirror NB. The mirror accessory included along with zip purse.\n* Cotton canvas lining\n\nCondition - Gentle use, shows sign of wear and minor discoloration on the back near the bottom (normal with wear)",
+    "description": "BALENCIAGA LE CAGOLE XS Shoulder Bag With Piercings In White...",
     "price": 3500,
     "thumbnail": "https://placehold.co/400x500?text=Listing+9",
     "isFreeShipping": true,
@@ -111,7 +303,8 @@
     "tags": ["2000s", "emo", "luxury", "bimbo", "y2k"],
     "category": "Bags & Luggage",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Shoulder Bags",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -119,12 +312,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 43,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "balenciaga bulldozer leather boots black",
     "designer": "Balenciaga",
-    "description": "balenciaga bulldozer boots\n\nsize 38\n\ngreat condition - small scratch on right ankle.\n\nno box - dustbags only\n\nfeel free to ask any questions and send offers!",
+    "description": "balenciaga bulldozer boots...",
     "price": 750,
     "thumbnail": "https://placehold.co/400x500?text=Listing+10",
     "isFreeShipping": true,
@@ -135,7 +375,8 @@
     "tags": ["rave", "goth"],
     "category": "Footwear",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Boots",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -143,12 +384,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 245,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "2-Way Detachable Jogger",
     "designer": "Guerrilla Group",
-    "description": "Selling these beautiful Guerrilla-group.co pants.\n\nThe pants are in very good condition.\n\nMeasurements are made with the legs attached.\n\nShipping from Germany\n\nIf you have any further questions feel free to contact me ✌️",
+    "description": "Selling these beautiful Guerrilla-group.co pants...",
     "originalPrice": 247,
     "price": 129,
     "thumbnail": "https://placehold.co/400x500?text=Listing+11",
@@ -160,7 +448,8 @@
     "tags": ["acronym", "cyberpunk", "techwear"],
     "category": "Bottoms",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Sweatpants & Joggers",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -168,12 +457,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 15,
-    "countryOfOrigin": "Taiwan"
+    "countryOfOrigin": "Taiwan",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Rick Owens SS20 Tecuatl Mega Lace Geobaskets",
     "designer": "Rick Owens",
-    "description": "Size EU 44\nHeel tapped\nBought off I Need It haven’t worn much\n\nOpen to offers",
+    "description": "Size EU 44\nHeel tapped\nBought off I Need It haven\u2019t worn much\n\nOpen to offers",
     "originalPrice": 1400,
     "price": 918,
     "thumbnail": "https://placehold.co/400x500?text=Listing+12",
@@ -185,7 +521,8 @@
     "tags": ["archive", "opium", "darkwear"],
     "category": "Footwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Hi-Top Sneakers",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -193,7 +530,54 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 52,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Rick Owens Bogun Boots FW24",
@@ -210,7 +594,8 @@
     "tags": [],
     "category": "Footwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Boots",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -218,7 +603,54 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 246,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Heaven by Marc Jacobs Teddy Hug Earrings",
@@ -234,7 +666,8 @@
     "tags": ["ARCHIVE", "TECHWEAR", "FUTURISTIC"],
     "category": "Jewelry",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Earrings",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -242,7 +675,54 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 3,
-    "countryOfOrigin": "China"
+    "countryOfOrigin": "China",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Carol Christian Poell Titanium Prosthetic Tornado Boots",
@@ -259,7 +739,8 @@
     "tags": ["Avant-Garde"],
     "category": "Footwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Boots",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -267,12 +748,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 217,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "S.O.D.A / NANO-SHELL GP JACKET DCF ENHANCED",
     "designer": "Hamcus",
-    "description": "_INCREDIBLY LIGHTWEIGHT WIND-WATER-PROOF QUICK-DRYING MEMBRANE SITS ON THE OUTER LAYER.\n_DYNEEMA COMPOSITE FABRIC (DCF) ENHANCED PANELS AT FRONT GP POCKET, CUFF AND REAR GP DETACHABLE POCKET.\n_ALL TAPED INNER SEAM CONSTRUCTION.\n_DETACHABLE CONCEALED ZIPPER PANEL-CARGO POCKET ON THE BACK.\n_CONCEALED UTILITY ZIPPER POCKET AT BOTH SIDES OF CHEST.\n_CONCEALED ZIPPER PANELED DCF ENHANCED POCKET AT BOTH SIDES OF LOWER FRONT.\n_2-WAY ZIPPER CLOSURE FRONT PLACKET UP TO PYRA-COLLAR.\n_CUFF ADJUSTABLE WITH SNAP-STRAPS.\n_ELEMENTS ASSOCIATED WITH THE LP WORLD ARE PRINTED THROUGHOUT.\n_NEAR THE UNDERSIDE OF THE CUFFS, THERE IS A DCF REINFORCED PANEL, WHICH PROTECTS EMPLOYEES WEARING THIS JACKET WITH NECESSARY OPERATIONAL PROTECTION FUNCTIONS.\n\n_THE LUMINOUS 3D SILICA GEL DUSZEN UPLINK PORT MODULE UNDER THE METAL EYELOCK LOCATED DIRECTLY BEHIND THE PYRAMID COLLAR, ALLOWS EMPLOYEES TO ACCURATELY DOCK THE DUSZEN UPLINK TERMINAL IN AN ENVIRONMENT WITH INSUFFICIENT LIGHT.\n",
+    "description": "...",
     "originalPrice": 480,
     "price": 227,
     "thumbnail": "https://placehold.co/400x500?text=Listing+22",
@@ -284,7 +812,8 @@
     "tags": ["TECHWEAR", "CYBERPUNK"],
     "category": "Outerwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Light Jackets",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -292,12 +821,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 74,
-    "countryOfOrigin": "Germany"
+    "countryOfOrigin": "Germany",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Louis Vuitton 45 Keepall Duffle Bag",
     "designer": "Louis Vuitton",
-    "description": "Vintage Louis Vuitton 45 Keepall Duffle Bag\n\nAmazing condition for age, but definitely has wear.",
+    "description": "Vintage Louis Vuitton 45 Keepall Duffle Bag...",
     "price": 700,
     "thumbnail": "https://placehold.co/400x500?text=Listing+23",
     "isFreeShipping": false,
@@ -307,7 +883,8 @@
     "condition": "Used",
     "category": "Bags & Luggage",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Luggage & Travel",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -315,12 +892,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 333,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "New Rock Jaded Reactor Boots",
     "designer": "New Rock",
-    "description": "New Rock Jaded First Collab\nSize 39 UK 6\nshoe was worn once\nNo 2 pairs are the same\nretail is $535\nNYC based, meetups available",
+    "description": "New Rock Jaded First Collab\nSize 39 UK 6...",
     "originalPrice": 347,
     "price": 225,
     "thumbnail": "https://placehold.co/400x500?text=Listing+24",
@@ -331,7 +955,8 @@
     "condition": "Gently Used",
     "category": "Footwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Boots",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -339,12 +964,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 24,
-    "countryOfOrigin": "China"
+    "countryOfOrigin": "China",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Prada Monolith Leather Re-Nylon Combat Boots Pouch - 40",
     "designer": "Prada",
-    "description": "Worn a bunch. Has scuff marks on the inner part of the boots but any cobbler can get them out. Purchased from Prada directly for $1750 plus tax\nBeen sitting in closet for a while. Includes og all. Can fit a men’s 7.\n\nThese brushed leather and nylon boots are decorated with a versatile pouch that recalls a multi-pocket design. The formal rigor of the uniform inspires this shoe, an expression of a timeless design, monolithic and unique, that reinterprets the dual soul of Prada from a modernist perspective. The maxi sole that defines the bold lines of Monolith footwear is combined with elegant brushed leather, emphasizing the brand's desire to create harmony through diametrically opposed hybrid concepts.\n\nUpper: brushed leather and nylon\nMetal eyelets and laces\nRemovable nylon pouch\nEnameled metal triangle logo\nLight rubber lug tread sole",
+    "description": "Worn a bunch... Maxi sole, brushed leather and nylon...",
     "price": 900,
     "thumbnail": "https://placehold.co/400x500?text=Listing+25",
     "isFreeShipping": false,
@@ -355,7 +1027,8 @@
     "tags": ["Luxury"],
     "category": "Footwear",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Boots",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -363,12 +1036,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 13,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Dior ski 6 mask sunglasses white",
     "designer": "Dior",
-    "description": "In perfect condition, theres a small tear in the middle of the glasses but its unnoticeable.\n\nCase is included.\n\nShipping international\n\n❤️",
+    "description": "In perfect condition... small tear...",
     "originalPrice": 340,
     "price": 300,
     "thumbnail": "https://placehold.co/400x500?text=Listing+27",
@@ -379,7 +1099,8 @@
     "condition": "Gently Used",
     "category": "Accessories",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Sunglasses",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -387,12 +1108,59 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 34,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Prada Symbole Sunglasses",
     "designer": "Prada",
-    "description": "Very good silhouette\nVery gently used\nComes with box,case, and cloth\n\nMessage if you have any questions",
+    "description": "Very good silhouette...",
     "price": 300,
     "thumbnail": "https://placehold.co/400x500?text=Listing+28",
     "isFreeShipping": false,
@@ -403,7 +1171,8 @@
     "tags": ["Luxury"],
     "category": "Accessories",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "subCategory": "Sunglasses",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -411,7 +1180,54 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 17,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Somar Hunk Boots",
@@ -427,7 +1243,7 @@
     "tags": ["Somarian", "Streetwear"],
     "category": "Footwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -435,7 +1251,55 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 41,
-    "countryOfOrigin": "United States"
+    "countryOfOrigin": "United States",
+    "subCategory": "Boots",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Rick Owens Mainline Black Pony Hair Ramones Low",
@@ -450,9 +1314,9 @@
     "color": "Black",
     "condition": "Used",
     "tags": ["goth", "streetwear", "luxury"],
-    "category": "Outerwear",
+    "category": "Footwear",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -460,7 +1324,55 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 33,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "subCategory": "Low-Top Sneakers",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "VETEMENTS Unicorn Edition Hoodie",
@@ -475,9 +1387,9 @@
     "color": "Pink",
     "condition": "Gently Used",
     "tags": ["Emo", "Goth", "Raver"],
-    "category": "Outerwear",
+    "category": "Tops",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -485,7 +1397,55 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 49,
-    "countryOfOrigin": "China"
+    "countryOfOrigin": "China",
+    "subCategory": "Sweatshirts & Hoodies",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Diesel 1DR",
@@ -502,7 +1462,7 @@
     "tags": ["Y2K", "2000s"],
     "category": "Bags & Luggage",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -510,7 +1470,55 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 666,
-    "countryOfOrigin": "United States"
+    "countryOfOrigin": "United States",
+    "subCategory": "Crossbody Bags",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Guerilla Group S4-PL01 Black XS cargo pants",
@@ -525,9 +1533,9 @@
     "color": "Black",
     "condition": "Gently Used",
     "tags": ["techwear"],
-    "category": "Outerwear",
+    "category": "Bottoms",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -535,7 +1543,55 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 22,
-    "countryOfOrigin": "Taiwan"
+    "countryOfOrigin": "Taiwan",
+    "subCategory": "Casual Pants",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Enfin Leve Ameztu Stotz Etaproof Cargo Pants Ash Dye",
@@ -552,7 +1608,7 @@
     "tags": ["RARE", "TECHWEAR"],
     "category": "Bottoms",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -560,12 +1616,60 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 24,
-    "countryOfOrigin": "United States"
+    "countryOfOrigin": "United States",
+    "subCategory": "Casual Pants",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Heliot Emil FW21 Drape-panel Leather Coat",
     "designer": "Heliot Emil",
-    "description": "BRAND: Heliot Emil\nTYPE/STYLE: FW21 Drape-panel Leather Coat\nCONDITION: Gently Used/Like New\nMADE IN: Poland\nSIZE: 34\nMEASUREMENTS:\nUnderarm- 18\nLength- 37\n\nDESCRIPTION:\n100% Cow Leather\nMagnetic Snap Button Closure\nFW21 Unstable Equilibrium Collection\nCarabiner Latch\n\nIf you are reading this the item is available and ready for purchase. 100% Guaranteed Authentic.\nCheck out my other items for sale and follow my account for new deals every week.\nWill create a bundle listing on here w/DISCOUNTS&FREE SHIPPING for orders of 2+ items.\nAble to ship only to your address on file *NO EXCEPTIONS*, make sure it is correct prior to purchase.\nFOR SALE VIA THIS PLATFORM ONLY! +no trades\nUnless clearly stated otherwise, all sales are final.\nAll measurements provided are close approximate. See photos for item condition.\nPlease allow 0-3 business days for shipping. We only ship twice per week.",
+    "description": "BRAND: Heliot Emil\nTYPE/STYLE: FW21 Drape-panel Leather Coat\n...",
     "originalPrice": 1200,
     "price": 961,
     "thumbnail": "https://placehold.co/400x500?text=Listing+47",
@@ -576,7 +1680,7 @@
     "condition": "Gently Used",
     "category": "Outerwear",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -584,12 +1688,60 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 1,
-    "countryOfOrigin": "France"
+    "countryOfOrigin": "France",
+    "subCategory": "Leather Jackets",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Jean's Paul Gaultier Y2K Crimped Denim Low-Rise Mini-Skirt",
     "designer": "Jean Paul Gaultier",
-    "description": "From the brand Jean's Paul Gaultier (2004–2008), which replaced Jean Paul Gaultier's earlier diffusion line Gaultier Jeans (1992–2003).\nLogo-engraved button & right back pocket plate\nBlack logo-embossed leather strip to mid back\nRidges with wiggling ripple effect on both front and back\nContrast baby blue & gray stitching\nA little distress to inside label tag noted\n4-pocket styling\nButton fly\n10/10\n\n70% cotton, 30% polyester\nMachine wash\nMade in Italy\n\nMarked size: 40\n\nWaist: 26–28\"\nLength:14\"",
+    "description": "From the brand Jean's Paul Gaultier (2004\u20132008), which replaced Jean Paul Gaultier's earlier diffusion line Gaultier Jeans (1992\u20132003).\n...",
     "originalPrice": 200,
     "price": 180,
     "thumbnail": "https://placehold.co/400x500?text=Listing+49",
@@ -601,7 +1753,7 @@
     "tags": ["thrifted", "archive", "runway"],
     "category": "Bottoms",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -609,12 +1761,60 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 37,
-    "countryOfOrigin": "United States"
+    "countryOfOrigin": "United States",
+    "subCategory": "Mini Skirts",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Moncler Trailgrip High Goretex Boot Sneakers",
     "designer": "Moncler",
-    "description": "Moncler Trailgrip High Boot Sneakers in black, made with Goretex. Vibram soles, and a carbon fiber plate inside which helps for energy retention. Leather fabrication. Padded and insulated- perfect for winter.\n\nIn original box with dust bags. Comes with green and red laces that can be swapped in.\n\nRetail at $1050- Gently used a few times for one season. No visible or functional flaws. Will wipe down before shipping to get rid of small salt stains!",
+    "description": "Moncler Trailgrip High Boot Sneakers in black, made with Goretex...",
     "originalPrice": 234,
     "price": 210,
     "thumbnail": "https://placehold.co/400x500?text=Listing+50",
@@ -626,7 +1826,7 @@
     "tags": ["gorpcore"],
     "category": "Footwear",
     "department": "Menswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -634,7 +1834,55 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 31,
-    "countryOfOrigin": "Italy"
+    "countryOfOrigin": "Italy",
+    "subCategory": "Hi-Top Sneakers",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   },
   {
     "title": "Maison Marigela Tabi Sneakers (Black/White)",
@@ -651,7 +1899,7 @@
     "tags": ["archive"],
     "category": "Footwear",
     "department": "Womenswear",
-    "seller": "6837f4a11120d2adc674b9fc",
+    "seller": "688863381f9695a00f250e6a",
     "canOffer": true,
     "isSold": false,
     "isDraft": false,
@@ -659,6 +1907,54 @@
     "authenticated": false,
     "images": [],
     "favoritesCount": 324,
-    "countryOfOrigin": "France"
+    "countryOfOrigin": "France",
+    "subCategory": "Low-Top Sneakers",
+    "shippingFrom": {
+      "fullName": "John Doe",
+      "line1": "1234 Mockingbird Lane",
+      "line2": "Unit 5B",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90026",
+      "country": "United States",
+      "phone": "555-123-4567"
+    },
+    "shippingRegions": [
+      {
+        "region": "United States",
+        "cost": 15,
+        "enabled": true
+      },
+      {
+        "region": "Canada",
+        "cost": 25,
+        "enabled": false
+      },
+      {
+        "region": "United Kingdom",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Europe",
+        "cost": 30,
+        "enabled": false
+      },
+      {
+        "region": "Asia",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Australia / NZ",
+        "cost": 35,
+        "enabled": false
+      },
+      {
+        "region": "Other",
+        "cost": 40,
+        "enabled": false
+      }
+    ]
   }
 ]
