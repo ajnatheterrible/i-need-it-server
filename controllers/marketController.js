@@ -5,7 +5,7 @@ import createError from "../utils/createError.js";
 
 export const uploadImage = asyncHandler(async (req, res) => {
   if (!req.file)
-    throw createError(400, "No file uploaded or file type not allowed");
+    throw createError("No file uploaded or file type not allowed", 400);
 
   const fileStr = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
 
@@ -18,6 +18,8 @@ export const uploadImage = asyncHandler(async (req, res) => {
 });
 
 export const uploadListing = asyncHandler(async (req, res) => {
+  const user = req.user;
+
   const { formData } = req.body;
   if (!formData) throw createError("Listing data is required", 400);
 
@@ -41,6 +43,8 @@ export const uploadListing = asyncHandler(async (req, res) => {
     canOffer: formData.acceptOffers ?? undefined,
     isDraft: formData.isDraft === true,
     countryOfOrigin: formData.countryOfOrigin || undefined,
+    shippingFrom: formData.shippingFrom || undefined,
+    shippingRegions: formData.shippingRegions || undefined,
   };
 
   const requiredFields = [
@@ -54,10 +58,20 @@ export const uploadListing = asyncHandler(async (req, res) => {
     "selectedCondition",
     "priceInput",
     "uploadedImageUrls",
+    "shippingFrom",
+    "shippingRegions",
   ];
 
   if (!formData.isDraft && requiredFields.some((field) => !formData[field])) {
     throw createError("All fields are required", 400);
+  }
+
+  const addressExists = user.settings.addresses.some(
+    (addr) => addr._id.toString() === formData.shippingFrom._id
+  );
+
+  if (!addressExists) {
+    throw createError("Invalid shipping address selected.", 400);
   }
 
   const listing = await Listing.create(baseListing);
@@ -65,10 +79,12 @@ export const uploadListing = asyncHandler(async (req, res) => {
 });
 
 export const patchListing = asyncHandler(async (req, res) => {
+  const user = req.user;
+
   const { formData, listingId } = req.body;
 
   if (!listingId) {
-    throw createError(400, "Listing ID is required to update listing");
+    throw createError("Listing ID is required to update listing", 400);
   }
 
   const cleanPrice = parseFloat(formData.priceInput?.replace(/[^0-9.]/g, ""));
@@ -90,26 +106,57 @@ export const patchListing = asyncHandler(async (req, res) => {
     canOffer: formData.acceptOffers ?? undefined,
     isDraft: formData.isDraft === true,
     countryOfOrigin: formData.countryOfOrigin || undefined,
+    shippingFrom: formData.shippingFrom || undefined,
+    shippingRegions: formData.shippingRegions || undefined,
   };
+
+  const requiredFields = [
+    "selectedDepartment",
+    "selectedCategory",
+    "selectedSubcategory",
+    "selectedSize",
+    "selectedDesigner",
+    "itemName",
+    "selectedColor",
+    "selectedCondition",
+    "priceInput",
+    "uploadedImageUrls",
+    "shippingFrom",
+    "shippingRegions",
+  ];
+
+  if (!formData.isDraft && requiredFields.some((field) => !formData[field])) {
+    throw createError("All fields are required to update listing", 400);
+  }
+
+  const addressExists = user.settings.addresses.some(
+    (addr) => addr._id.toString() === formData.shippingFrom._id
+  );
+
+  if (!addressExists) {
+    throw createError("Invalid shipping address selected.", 400);
+  }
 
   const updated = await Listing.findByIdAndUpdate(listingId, updatedFields, {
     new: true,
   });
 
   if (!updated) {
-    throw createError(404, "Listing not found or could not be updated");
+    throw createError("Listing not found or could not be updated", 404);
   }
 
   res.status(200).json({ message: "Listing updated", listing: updated });
 });
 
 export const deleteDraft = asyncHandler(async (req, res) => {
+  const user = req.user;
+
   const { draftId } = req.body;
   if (!draftId) throw createError("Draft ID is required", 400);
 
   const draft = await Listing.findOne({ _id: draftId, isDraft: true });
   if (!draft) throw createError("Draft not found or is not a draft", 404);
-  if (draft.seller.toString() !== req.user._id.toString()) {
+  if (draft.seller.toString() !== user._id.toString()) {
     throw createError("Not authorized to delete this draft", 403);
   }
 

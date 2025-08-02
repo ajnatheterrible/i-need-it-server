@@ -311,40 +311,12 @@ export const addNewAddress = asyncHandler(async (req, res) => {
     isDefaultShipping,
     isDefaultPurchase,
   } = newAddress || {};
+
   if (!fullName || !line1 || !city || !state || !country || !zip) {
     throw createError("Missing required fields", 400);
   }
 
   if (!user.settings.addresses) user.settings.addresses = [];
-
-  if (isDefaultShipping) {
-    user.settings.addresses = user.settings.addresses.map((address) => ({
-      ...address,
-      isDefaultShipping: false,
-    }));
-  } else {
-    const hasDefaultShipping = user.settings.addresses.some(
-      (address) => address.isDefaultShipping === true
-    );
-
-    if (!hasDefaultShipping) {
-      newAddress.isDefaultShipping = true;
-    }
-  }
-
-  if (isDefaultPurchase) {
-    user.settings.addresses = user.settings.addresses.map((address) => ({
-      ...address,
-      isDefaultPurchase: false,
-    }));
-  } else {
-    const hasDefaultPurchase = user.settings.addresses.some(
-      (address) => address.isDefaultPurchase === true
-    );
-    if (!hasDefaultPurchase) {
-      newAddress.isDefaultPurchase = true;
-    }
-  }
 
   const normalize = (str) => (str || "").trim().toLowerCase();
 
@@ -365,8 +337,40 @@ export const addNewAddress = asyncHandler(async (req, res) => {
     throw createError("This address already exists", 400);
   }
 
+  let previousDefault = null;
+
+  if (isDefaultShipping) {
+    previousDefault = user.settings.addresses.find((a) => a.isDefaultShipping);
+    user.settings.addresses = user.settings.addresses.map((address) => ({
+      ...address,
+      isDefaultShipping: false,
+    }));
+  } else {
+    const hasDefaultShipping = user.settings.addresses.some(
+      (address) => address.isDefaultShipping === true
+    );
+
+    if (!hasDefaultShipping) {
+      newAddress.isDefaultShipping = true;
+    }
+  }
+
   user.settings.addresses.push(newAddress);
   await user.save();
+
+  if (isDefaultShipping && previousDefault) {
+    await Listing.updateMany(
+      {
+        seller: user._id,
+        "shippingFrom.fullName": previousDefault.fullName,
+        "shippingFrom.line1": previousDefault.line1,
+        "shippingFrom.zip": previousDefault.zip,
+      },
+      {
+        $set: { shippingFrom: newAddress },
+      }
+    );
+  }
 
   res.status(201).json(user.settings.addresses);
 });
@@ -379,11 +383,11 @@ export const editAddress = asyncHandler(async (req, res) => {
     throw createError("Couldn't edit address", 400);
   }
 
-  const exists = user.settings.addresses.some(
+  const existingAddress = user.settings.addresses.find(
     (address) => address._id.toString() === id
   );
 
-  if (!exists) {
+  if (!existingAddress) {
     throw createError("Address not found", 404);
   }
 
@@ -408,14 +412,29 @@ export const editAddress = asyncHandler(async (req, res) => {
     (address) => address._id.toString() !== id
   );
 
-  user.settings.addresses.push({
+  const updatedAddress = {
     ...req.body,
     _id: id,
     isDefaultShipping,
     isDefaultPurchase,
-  });
+  };
 
+  user.settings.addresses.push(updatedAddress);
   await user.save();
+
+  if (isDefaultShipping) {
+    await Listing.updateMany(
+      {
+        seller: user._id,
+        "shippingFrom.fullName": existingAddress.fullName,
+        "shippingFrom.line1": existingAddress.line1,
+        "shippingFrom.zip": existingAddress.zip,
+      },
+      {
+        $set: { shippingFrom: updatedAddress },
+      }
+    );
+  }
 
   res.status(200).json(user.settings.addresses);
 });
@@ -428,8 +447,45 @@ export const deleteAddress = asyncHandler(async (req, res) => {
     throw createError("Couldn't delete address", 400);
   }
 
+  const addressToDelete = user.settings.addresses.find(
+    (address) => address._id.toString() === id
+  );
+
+  if (!addressToDelete) {
+    throw createError("Address not found", 404);
+  }
+
+  if (user.settings.addresses.length === 1) {
+    throw createError(400, "You must have at least one saved address");
+  }
+
+  if (addressToDelete.isDefaultShipping || addressToDelete.isDefaultPurchase) {
+    throw createError(
+      400,
+      "You must set another address as default before deleting this one"
+    );
+  }
+
+  const newDefault = user.settings.addresses.find((a) => a.isDefaultShipping);
+
+  if (!newDefault) {
+    throw createError(400, "No default shipping address set");
+  }
+
   user.settings.addresses = user.settings.addresses.filter(
     (address) => address._id.toString() !== id
+  );
+
+  await Listing.updateMany(
+    {
+      seller: user._id,
+      "shippingFrom.fullName": addressToDelete.fullName,
+      "shippingFrom.line1": addressToDelete.line1,
+      "shippingFrom.zip": addressToDelete.zip,
+    },
+    {
+      $set: { shippingFrom: newDefault },
+    }
   );
 
   await user.save();
