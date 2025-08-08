@@ -10,12 +10,9 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
-console.log("Loaded MEILI_MASTER_KEY:", process.env.MEILI_MASTER_KEY);
-
 const client = new MeiliSearch({
   host: "http://127.0.0.1:7700",
-  apiKey: process.env.MEILI_MASTER_KEY || "your-hardcoded-meili-key-if-needed",
+  apiKey: process.env.MEILI_MASTER_KEY,
 });
 
 try {

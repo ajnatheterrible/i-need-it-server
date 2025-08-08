@@ -4,6 +4,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import createError from "../utils/createError.js";
 import crypto from "crypto";
 import { Resend } from "resend";
+import { updatePartialInMeili } from "../meili/meiliSync.js";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -26,6 +27,9 @@ export const addFavorite = asyncHandler(async (req, res) => {
     user.favorites.push(listingId);
     listing.favoritesCount += 1;
     await Promise.all([user.save(), listing.save()]);
+    updatePartialInMeili(listingId, {
+      favoritesCount: listing.favoritesCount,
+    }).catch(() => {});
   }
 
   const updatedUser = await user.populate("favorites");
@@ -49,6 +53,9 @@ export const removeFavorite = asyncHandler(async (req, res) => {
     );
     listing.favoritesCount = Math.max(0, listing.favoritesCount - 1);
     await Promise.all([user.save(), listing.save()]);
+    updatePartialInMeili(listingId, {
+      favoritesCount: listing.favoritesCount,
+    }).catch(() => {});
   }
 
   const updatedUser = await user.populate("favorites");
@@ -393,6 +400,19 @@ export const editAddress = asyncHandler(async (req, res) => {
 
   const isDefaultShipping = req.body.isDefaultShipping === true;
   const isDefaultPurchase = req.body.isDefaultPurchase === true;
+
+  const totalAddresses = user.settings.addresses.length;
+
+  if (
+    totalAddresses === 1 &&
+    existingAddress.isDefaultShipping &&
+    req.body.isDefaultShipping === false
+  ) {
+    throw createError(
+      "You cannot unset the only default return shipping address",
+      400
+    );
+  }
 
   if (isDefaultShipping) {
     user.settings.addresses = user.settings.addresses.map((address) => ({

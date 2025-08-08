@@ -2,6 +2,10 @@ import Listing from "../models/Listing.js";
 import cloudinary from "../config/cloudinary.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import createError from "../utils/createError.js";
+import {
+  upsertListingToMeili,
+  removeListingFromMeili,
+} from "../meili/meiliSync.js";
 
 export const uploadImage = asyncHandler(async (req, res) => {
   if (!req.file)
@@ -75,6 +79,11 @@ export const uploadListing = asyncHandler(async (req, res) => {
   }
 
   const listing = await Listing.create(baseListing);
+
+  upsertListingToMeili(listing).catch((e) =>
+    console.error("Meili upsert (create) failed:", e?.message || e)
+  );
+
   res.status(201).json({ message: "Listing created", listing });
 });
 
@@ -145,6 +154,10 @@ export const patchListing = asyncHandler(async (req, res) => {
     throw createError("Listing not found or could not be updated", 404);
   }
 
+  upsertListingToMeili(updated).catch((e) =>
+    console.error("Meili sync (update) failed:", e?.message || e)
+  );
+
   res.status(200).json({ message: "Listing updated", listing: updated });
 });
 
@@ -161,5 +174,8 @@ export const deleteDraft = asyncHandler(async (req, res) => {
   }
 
   await draft.deleteOne();
+
+  removeListingFromMeili(draftId).catch(() => {});
+
   res.status(200).json({ message: "Draft deleted successfully" });
 });
