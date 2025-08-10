@@ -317,9 +317,10 @@ export const addNewAddress = asyncHandler(async (req, res) => {
     zip,
     isDefaultShipping,
     isDefaultPurchase,
+    phone,
   } = newAddress || {};
 
-  if (!fullName || !line1 || !city || !state || !country || !zip) {
+  if (!fullName || !line1 || !city || !state || !country || !zip || !phone) {
     throw createError("Missing required fields", 400);
   }
 
@@ -345,27 +346,52 @@ export const addNewAddress = asyncHandler(async (req, res) => {
   }
 
   let previousDefault = null;
+  const isFirstAddress = user.settings.addresses.length === 0;
 
-  if (isDefaultShipping) {
-    previousDefault = user.settings.addresses.find((a) => a.isDefaultShipping);
-    user.settings.addresses = user.settings.addresses.map((address) => ({
-      ...address,
-      isDefaultShipping: false,
-    }));
+  if (isFirstAddress) {
+    newAddress.isDefaultShipping = true;
+    newAddress.isDefaultPurchase = true;
   } else {
-    const hasDefaultShipping = user.settings.addresses.some(
-      (address) => address.isDefaultShipping === true
-    );
-
-    if (!hasDefaultShipping) {
+    if (isDefaultShipping) {
+      previousDefault = user.settings.addresses.find(
+        (a) => a.isDefaultShipping
+      );
+      user.settings.addresses = user.settings.addresses.map((address) => ({
+        ...address,
+        isDefaultShipping: false,
+      }));
       newAddress.isDefaultShipping = true;
+    } else {
+      const hasDefaultShipping = user.settings.addresses.some(
+        (address) => address.isDefaultShipping === true
+      );
+
+      if (!hasDefaultShipping) {
+        newAddress.isDefaultShipping = true;
+      }
+    }
+
+    if (isDefaultPurchase) {
+      user.settings.addresses = user.settings.addresses.map((address) => ({
+        ...address,
+        isDefaultPurchase: false,
+      }));
+      newAddress.isDefaultPurchase = true;
+    } else {
+      const hasDefaultPurchase = user.settings.addresses.some(
+        (address) => address.isDefaultPurchase === true
+      );
+
+      if (!hasDefaultPurchase) {
+        newAddress.isDefaultPurchase = true;
+      }
     }
   }
 
   user.settings.addresses.push(newAddress);
   await user.save();
 
-  if (isDefaultShipping && previousDefault) {
+  if (newAddress.isDefaultShipping && previousDefault) {
     await Listing.updateMany(
       {
         seller: user._id,
@@ -403,15 +429,26 @@ export const editAddress = asyncHandler(async (req, res) => {
 
   const totalAddresses = user.settings.addresses.length;
 
-  if (
-    totalAddresses === 1 &&
-    existingAddress.isDefaultShipping &&
-    req.body.isDefaultShipping === false
-  ) {
-    throw createError(
-      "You cannot unset the only default return shipping address",
-      400
-    );
+  if (totalAddresses === 1) {
+    if (
+      existingAddress.isDefaultShipping &&
+      req.body.isDefaultShipping === false
+    ) {
+      throw createError(
+        "You cannot unset the only default return shipping address",
+        400
+      );
+    }
+
+    if (
+      existingAddress.isDefaultPurchase &&
+      req.body.isDefaultPurchase === false
+    ) {
+      throw createError(
+        "You cannot unset the only default purchase address",
+        400
+      );
+    }
   }
 
   if (isDefaultShipping) {

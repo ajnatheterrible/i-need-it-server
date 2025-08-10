@@ -18,16 +18,11 @@ const OrderSchema = new mongoose.Schema(
       required: true,
     },
 
+    // Wallet flow: order is created after payment succeeds
     status: {
       type: String,
-      enum: [
-        "awaiting_shipment",
-        "shipped",
-        "in_transit",
-        "delivered",
-        "completed",
-      ],
-      default: "awaiting_shipment",
+      enum: ["PAID", "SHIPPED", "DELIVERED", "CANCELED"],
+      default: "PAID",
     },
 
     trackingNumber: { type: String, default: null },
@@ -35,6 +30,7 @@ const OrderSchema = new mongoose.Schema(
     shippedAt: Date,
     deliveredAt: Date,
 
+    // Snapshot of where it's going
     shippingAddress: {
       fullName: String,
       line1: String,
@@ -45,11 +41,14 @@ const OrderSchema = new mongoose.Schema(
       country: String,
     },
 
+    // Keep as-is for now (you can upgrade to a full address later)
     shippingFrom: {
       type: String,
       default: null,
     },
 
+    // Existing float-based breakdown (you can keep using it for UI),
+    // but total_cents + currency below are the source of truth.
     price: {
       listingPrice: { type: Number, required: true },
       shipping: { type: Number, default: 0 },
@@ -57,17 +56,23 @@ const OrderSchema = new mongoose.Schema(
       total: { type: Number, required: true },
     },
 
+    // 🔹 Money you actually trust (wallet + math): store in cents
+    total_cents: { type: Number, required: true },
+    currency: { type: String, default: "USD" },
+
     paymentMethod: {
       type: String,
-      default: "Unknown",
+      default: "Wallet",
     },
 
+    // Snapshot of the listing at purchase time
     listingSnapshot: {
       title: String,
-      brand: String,
+      designer: String, // was "brand"
       size: String,
-      price: Number,
+      price_cents: Number, // was "price"
       imageUrl: String,
+      // optionally add: condition, images[], etc. later if you want
     },
 
     orderId: { type: String, unique: true },

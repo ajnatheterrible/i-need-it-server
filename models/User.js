@@ -67,6 +67,10 @@ const UserSchema = new mongoose.Schema(
       default: "user",
       index: true,
     },
+    virtualBalanceCents: {
+      type: Number,
+      default: 100000,
+    },
     settings: {
       addresses: [
         {
