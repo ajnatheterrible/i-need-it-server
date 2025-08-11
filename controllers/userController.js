@@ -555,3 +555,9 @@ export const getAddresses = asyncHandler(async (req, res) => {
 
   res.status(200).json(user.settings?.addresses ?? null);
 });
+
+export const getPaymentMethods = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  res.status(200).json(user.settings?.paymentMethods ?? null);
+});

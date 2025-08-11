@@ -69,7 +69,7 @@ const UserSchema = new mongoose.Schema(
     },
     virtualBalanceCents: {
       type: Number,
-      default: 100000,
+      default: 500000,
     },
     settings: {
       addresses: [
@@ -103,7 +103,39 @@ const UserSchema = new mongoose.Schema(
         ],
         default: null,
       },
-      paymentMethod: { type: String, default: "" },
+      paymentMethods: [
+        {
+          cardType: {
+            type: String,
+            enum: ["Visa", "Mastercard", "Amex", "Discover"],
+            required: true,
+          },
+          last4: {
+            type: String,
+            required: true,
+            minlength: 4,
+            maxlength: 4,
+          },
+          expMonth: {
+            type: Number,
+            min: 1,
+            max: 12,
+            required: true,
+          },
+          expYear: {
+            type: Number,
+            required: true,
+          },
+          isDefault: {
+            type: Boolean,
+            default: false,
+          },
+          addedAt: {
+            type: Date,
+            default: Date.now,
+          },
+        },
+      ],
       sizes: {
         menswear: {
           Tops: [{ type: String, enum: clothingSizes }],
@@ -187,6 +219,28 @@ const UserSchema = new mongoose.Schema(
 UserSchema.pre("save", async function (next) {
   if (this.isModified("username") && this.username) {
     this.usernameLower = this.username.toLowerCase();
+  }
+
+  if (
+    this.isNew &&
+    (!this.settings.paymentMethods || this.settings.paymentMethods.length === 0)
+  ) {
+    this.settings.paymentMethods = [
+      {
+        cardType: "Visa",
+        last4: "0699",
+        expMonth: 11,
+        expYear: 2026,
+        isDefault: true,
+      },
+      {
+        cardType: "Mastercard",
+        last4: "6219",
+        expMonth: 3,
+        expYear: 2029,
+        isDefault: false,
+      },
+    ];
   }
 
   if (!this.isModified("password") || !this.password) return next();
