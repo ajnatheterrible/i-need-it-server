@@ -25,9 +25,6 @@ const OrderSchema = new mongoose.Schema(
     },
 
     trackingNumber: { type: String, default: null },
-    carrier: { type: String, default: null },
-    shippedAt: Date,
-    deliveredAt: Date,
 
     shippingAddress: {
       fullName: String,
@@ -37,6 +34,7 @@ const OrderSchema = new mongoose.Schema(
       state: String,
       zip: String,
       country: String,
+      phone: String,
     },
 
     shippingFrom: {
@@ -56,7 +54,7 @@ const OrderSchema = new mongoose.Schema(
 
     paymentMethod: {
       type: String,
-      default: "Wallet",
+      default: "Credit",
     },
 
     listingSnapshot: {
@@ -76,6 +74,8 @@ const OrderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+OrderSchema.index({ listing: 1, buyer: 1 }, { unique: true });
 
 const Order = mongoose.model("Order", OrderSchema);
 export default Order;

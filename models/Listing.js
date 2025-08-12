@@ -223,11 +223,33 @@ const ListingSchema = new mongoose.Schema(
 );
 
 ListingSchema.pre("validate", function (next) {
-  if (this.isFreeShipping && Array.isArray(this.shippingRegions)) {
-    this.shippingRegions.forEach((region) => {
-      if (region.enabled) region.cost = 0;
+  const DEFAULT_US_RATE = 20;
+
+  const hasUS = this.shippingRegions?.some(
+    (region) => region.region === "United States"
+  );
+
+  if (!hasUS) {
+    this.shippingRegions = [
+      {
+        region: "United States",
+        cost: DEFAULT_US_RATE,
+        enabled: true,
+      },
+    ];
+  } else {
+    this.shippingRegions = this.shippingRegions.map((region) => {
+      if (region.region === "United States") {
+        return {
+          ...region,
+          enabled: true,
+          cost: this.isFreeShipping ? 0 : DEFAULT_US_RATE,
+        };
+      }
+      return region;
     });
   }
+
   next();
 });
 
