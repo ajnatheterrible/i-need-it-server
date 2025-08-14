@@ -7,7 +7,11 @@ export const getFeedListings = asyncHandler(async (req, res) => {
   const { query, department, category, condition, size, priceMin, priceMax } =
     req.query;
 
-  const meiliFilters = [];
+  const meiliFilters = [
+    "isSold = false",
+    "isDeleted = false",
+    "isDraft = false",
+  ];
 
   const addFilter = (key, value) => {
     const values = value

@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
+import client from "../meili/meili.js";
 
 import Listing from "../models/Listing.js";
 import Order from "../models/Order.js";
 import User from "../models/User.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import createError from "../utils/createError.js";
+import { upsertListingToMeili } from "../meili/meiliSync.js";
 
 export const purchaseListing = asyncHandler(async (req, res) => {
   const user = req.user;
@@ -50,9 +52,11 @@ export const purchaseListing = asyncHandler(async (req, res) => {
 
   const session = await mongoose.startSession();
 
+  let updatedListing, order;
+
   try {
     await session.withTransaction(async () => {
-      const updatedListing = await Listing.findOneAndUpdate(
+      updatedListing = await Listing.findOneAndUpdate(
         { _id: listingId, isSold: false },
         { isSold: true, buyer: user._id },
         { session, new: true }
@@ -78,7 +82,7 @@ export const purchaseListing = asyncHandler(async (req, res) => {
         throw createError("Duplicate order attempt", 409);
       }
 
-      const [order] = await Order.create(
+      [order] = await Order.create(
         [
           {
             listing: updatedListing._id,
@@ -109,9 +113,11 @@ export const purchaseListing = asyncHandler(async (req, res) => {
         ],
         { session }
       );
-
-      res.status(201).json({ message: "Order placed", order });
     });
+
+    await upsertListingToMeili(updatedListing);
+
+    res.status(201).json({ message: "Order placed", order });
   } finally {
     session.endSession();
   }

@@ -9,6 +9,9 @@ async function setupMeiliFilters() {
     "department",
     "condition",
     "price",
+    "isSold",
+    "isDeleted",
+    "isDraft",
   ]);
 }
 
