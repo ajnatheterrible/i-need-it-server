@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Listing from "../models/Listing.js";
+import Order from "../models/Order.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import createError from "../utils/createError.js";
 import crypto from "crypto";
@@ -117,6 +118,22 @@ export const getPurchases = asyncHandler(async (req, res) => {
   }
 
   res.status(200).json(listings);
+});
+
+export const getOrders = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  const orders = await Order.find({ buyer: user._id })
+    .select("_id listing seller status createdAt trackingNumber")
+    .populate("listing", "title price designer size thumbnail")
+    .populate("seller", "username")
+    .lean();
+
+  if (!orders.length) {
+    throw createError("No orders found", 404);
+  }
+
+  res.status(200).json(orders);
 });
 
 export const updatePrivacySettings = asyncHandler(async (req, res) => {

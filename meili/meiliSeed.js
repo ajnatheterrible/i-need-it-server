@@ -15,19 +15,66 @@ const client = new MeiliSearch({
   apiKey: process.env.MEILI_MASTER_KEY,
 });
 
-try {
-  await mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+const indexName = "listings";
+const index = client.index(indexName);
 
-  const listings = await Listing.find().lean();
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const response = await client.index("listings").addDocuments(listings);
-
-  console.log("Successfully seeded Meilisearch:", response);
-} catch (err) {
-  console.error("Error during seeding:", err);
-} finally {
-  process.exit();
+async function waitUntilDocsCount(
+  expected,
+  { timeoutMs = 15000, intervalMs = 200 } = {}
+) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const stats = await index.getStats();
+      if (stats?.numberOfDocuments >= expected) return stats;
+    } catch (_) {}
+    await sleep(intervalMs);
+  }
+  throw new Error(`Timed out waiting for ${expected} documents to be indexed`);
 }
+
+const seed = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+
+    try {
+      await client.deleteIndex(indexName);
+    } catch (_) {}
+
+    await client.createIndex(indexName, { primaryKey: "_id" });
+
+    const listings = await Listing.find().lean();
+    const payload = listings.map((l) => ({ ...l, _id: String(l._id) }));
+
+    await index.addDocuments(payload);
+
+    await index.updateSettings({
+      searchableAttributes: ["title", "designer", "description"],
+      filterableAttributes: [
+        "isSold",
+        "isDeleted",
+        "isDraft",
+        "department",
+        "category",
+        "condition",
+        "size",
+        "price",
+      ],
+      sortableAttributes: ["price", "createdAt"],
+    });
+
+    const stats = await waitUntilDocsCount(payload.length);
+
+    const { results } = await index.getDocuments({ limit: 3 });
+    console.log("📦 Listings in Meili (stats):", stats.numberOfDocuments);
+    console.log("📦 Listings fetched (sample):", results.length);
+  } catch (err) {
+    console.error("❌ Error during Meili seeding:", err);
+  } finally {
+    process.exit();
+  }
+};
+
+seed();

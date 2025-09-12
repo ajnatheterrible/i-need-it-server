@@ -20,9 +20,23 @@ const OrderSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["PAID", "SHIPPED", "DELIVERED", "CANCELED"],
+      enum: ["PAID", "SHIPPED", "IN TRANSIT", "DELIVERED", "CANCELED"],
       default: "PAID",
     },
+
+    statusHistory: [
+      {
+        status: {
+          type: String,
+          enum: ["PAID", "SHIPPED", "IN TRANSIT", "DELIVERED", "CANCELED"],
+          required: true,
+        },
+        updatedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
 
     trackingNumber: { type: String, default: null },
 

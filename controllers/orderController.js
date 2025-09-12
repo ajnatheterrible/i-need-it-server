@@ -82,6 +82,8 @@ export const purchaseListing = asyncHandler(async (req, res) => {
         throw createError("Duplicate order attempt", 409);
       }
 
+      const now = new Date();
+
       [order] = await Order.create(
         [
           {
@@ -89,6 +91,12 @@ export const purchaseListing = asyncHandler(async (req, res) => {
             buyer: user._id,
             seller: updatedListing.seller,
             status: "PAID",
+            statusHistory: [
+              {
+                status: "PAID",
+                updatedAt: now,
+              },
+            ],
             shippingAddress,
             shippingFrom: `${updatedListing.shippingFrom.city}, ${updatedListing.shippingFrom.state}`,
             price: {
@@ -155,4 +163,45 @@ export const getOrderById = asyncHandler(async (req, res) => {
   }
 
   res.status(200).json(order);
+});
+
+export const simulateOrderStatus = asyncHandler(async (req, res) => {
+  const { id: orderId } = req.params;
+  const user = req.user;
+
+  if (!orderId) {
+    throw createError("Missing order ID", 400);
+  }
+
+  const order = await Order.findById(orderId);
+  if (!order) {
+    throw createError("Order not found", 404);
+  }
+
+  const isBuyer = String(order.buyer) === String(user._id);
+  const isSeller = String(order.seller) === String(user._id);
+
+  if (!isBuyer && !isSeller) {
+    throw createError("Forbidden", 403);
+  }
+
+  const flow = ["PAID", "SHIPPED", "IN TRANSIT", "DELIVERED"];
+  const currentIndex = flow.indexOf(order.status);
+
+  if (currentIndex === -1 || currentIndex === flow.length - 1) {
+    return res.status(200).json({ message: "Order already completed", order });
+  }
+
+  const nextStatus = flow[currentIndex + 1];
+  const updatedAt = new Date();
+
+  order.status = nextStatus;
+  order.statusHistory.push({ status: nextStatus, updatedAt });
+
+  await order.save();
+
+  res.status(200).json({
+    message: `Order status updated to ${nextStatus}`,
+    order,
+  });
 });

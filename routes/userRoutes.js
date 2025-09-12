@@ -19,6 +19,7 @@ import {
   editAddress,
   getPurchases,
   getPaymentMethods,
+  getOrders,
 } from "../controllers/userController.js";
 
 import requireAuth from "../middleware/requireAuth.js";
@@ -44,5 +45,6 @@ router.post("/addresses", requireAuth, addNewAddress);
 router.put("/addresses/:id", requireAuth, editAddress);
 router.delete("/addresses/:id", requireAuth, deleteAddress);
 router.get("/payment-methods", requireAuth, getPaymentMethods);
+router.get("/orders", requireAuth, getOrders);
 
 export default router;

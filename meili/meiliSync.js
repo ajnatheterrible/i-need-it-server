@@ -29,13 +29,7 @@ export function toMeiliDoc(listing) {
 export async function upsertListingToMeili(listing) {
   const doc = toMeiliDoc(listing);
 
-  console.log("📤 Meili sync incoming:", doc._id);
-  console.log("   → isSold:", doc.isSold);
-  console.log("   → isDraft:", doc.isDraft);
-  console.log("   → isDeleted:", doc.isDeleted);
-
   if (doc.isDraft || doc.isDeleted || doc.isSold) {
-    console.log("🧹 Removing from Meili:", doc._id);
     try {
       await client.index("listings").deleteDocument(doc._id);
     } catch (err) {
@@ -44,7 +38,6 @@ export async function upsertListingToMeili(listing) {
     return;
   }
 
-  console.log("➕ Upserting into Meili:", doc._id);
   await client.index("listings").addDocuments([doc]);
 }
 
