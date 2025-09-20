@@ -33,6 +33,11 @@ const OfferSchema = new mongoose.Schema(
       maxlength: 1000,
     },
     respondedAt: Date,
+    parentOffer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Offer",
+    },
+    expiresAt: Date,
   },
   { timestamps: true }
 );

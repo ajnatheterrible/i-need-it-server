@@ -15,29 +15,55 @@ const MessageSchema = new mongoose.Schema(
     sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: function () {
+        return this.type !== "system";
+      },
+    },
+
+    type: {
+      type: String,
+      enum: ["text", "offer", "system"],
+      default: "text",
       required: true,
     },
-    receiver: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+
     content: {
       type: String,
-      required: true,
       maxlength: 2000,
+      required: function () {
+        return this.type === "text";
+      },
     },
-    sentAt: {
-      type: Date,
-      default: Date.now,
+
+    offer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Offer",
     },
-    read: {
-      type: Boolean,
-      default: false,
+
+    offerSnapshot: {
+      amount: Number,
+      status: {
+        type: String,
+        enum: ["pending", "accepted", "declined"],
+      },
+      createdAt: Date,
     },
+
+    system: {
+      event: {
+        type: String,
+        enum: ["offer_accepted", "offer_declined", "order_shipped"],
+      },
+      data: mongoose.Schema.Types.Mixed,
+    },
+
+    read: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
+
+MessageSchema.index({ thread: 1, createdAt: -1 });
+MessageSchema.index({ thread: 1, read: 1 });
 
 const Message = mongoose.model("Message", MessageSchema);
 export default Message;

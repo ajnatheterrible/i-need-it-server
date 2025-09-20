@@ -26,6 +26,7 @@ const ThreadSchema = new mongoose.Schema(
     lastMessageAt: {
       type: Date,
       default: Date.now,
+      index: true,
     },
     isArchived: {
       type: Boolean,
@@ -34,6 +35,8 @@ const ThreadSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+ThreadSchema.index({ listing: 1, buyer: 1, seller: 1 }, { unique: true });
 
 const Thread = mongoose.model("Thread", ThreadSchema);
 export default Thread;
