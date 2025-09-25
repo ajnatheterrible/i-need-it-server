@@ -19,14 +19,12 @@ const MessageSchema = new mongoose.Schema(
         return this.type !== "system";
       },
     },
-
     type: {
       type: String,
       enum: ["text", "offer", "system"],
       default: "text",
       required: true,
     },
-
     content: {
       type: String,
       maxlength: 2000,
@@ -34,36 +32,41 @@ const MessageSchema = new mongoose.Schema(
         return this.type === "text";
       },
     },
-
-    offer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Offer",
-    },
-
+    offer: { type: mongoose.Schema.Types.ObjectId, ref: "Offer" },
     offerSnapshot: {
-      amount: Number,
+      amount_cents: Number,
       status: {
         type: String,
-        enum: ["pending", "accepted", "declined"],
+        enum: ["pending", "declined", "expired"],
       },
-      createdAt: Date,
+      createdAt: { type: Date, default: Date.now },
     },
-
     system: {
       event: {
         type: String,
-        enum: ["offer_accepted", "offer_declined", "order_shipped"],
+        enum: [
+          "offer_declined",
+          "offer_expired",
+          "order_created",
+          "order_shipped",
+          "order_in_transit",
+          "order_delivered",
+          "payout_released",
+        ],
       },
       data: mongoose.Schema.Types.Mixed,
     },
-
-    read: { type: Boolean, default: false },
+    readBy: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        at: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );
 
 MessageSchema.index({ thread: 1, createdAt: -1 });
-MessageSchema.index({ thread: 1, read: 1 });
+MessageSchema.index({ thread: 1, "readBy.user": 1, createdAt: 1 });
 
-const Message = mongoose.model("Message", MessageSchema);
-export default Message;
+export default mongoose.model("Message", MessageSchema);

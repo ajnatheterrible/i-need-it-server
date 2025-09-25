@@ -17,30 +17,31 @@ const OfferSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    amount: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
+
+    amount_cents: { type: Number, required: true },
+    shipping_cents: { type: Number, default: 0 },
+    tax_cents: { type: Number, default: 0 },
+    total_cents: { type: Number, required: true },
+
     status: {
       type: String,
-      enum: ["pending", "accepted", "declined"],
+      enum: ["pending", "accepted", "declined", "expired"],
       default: "pending",
-      required: true,
     },
-    message: {
-      type: String,
-      maxlength: 1000,
-    },
-    respondedAt: Date,
+
+    message: { type: String, default: "" },
+    expiresAt: { type: Date, default: null },
+    respondedAt: { type: Date, default: null },
+
+    fundsHeld: { type: Boolean, default: false },
+
     parentOffer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Offer",
+      default: null,
     },
-    expiresAt: Date,
   },
   { timestamps: true }
 );
 
-const Offer = mongoose.model("Offer", OfferSchema);
-export default Offer;
+export default mongoose.model("Offer", OfferSchema);
