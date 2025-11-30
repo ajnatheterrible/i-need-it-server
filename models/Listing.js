@@ -214,7 +214,6 @@ const ListingSchema = new mongoose.Schema(
     isSold: { type: Boolean, default: false },
     isDraft: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
-    isArchived: { type: Boolean, default: false },
     authenticated: { type: Boolean, default: true },
     listingCode: String,
     reports: [{ type: mongoose.Schema.Types.ObjectId, ref: "Report" }],
@@ -225,29 +224,27 @@ const ListingSchema = new mongoose.Schema(
 ListingSchema.pre("validate", function (next) {
   const DEFAULT_US_RATE = 20;
 
-  const hasUS = this.shippingRegions?.some(
-    (region) => region.region === "United States"
+  if (!Array.isArray(this.shippingRegions)) {
+    this.shippingRegions = [];
+  }
+
+  const usIndex = this.shippingRegions.findIndex(
+    (r) => r.region === "United States"
   );
 
-  if (!hasUS) {
-    this.shippingRegions = [
-      {
-        region: "United States",
-        cost: DEFAULT_US_RATE,
-        enabled: true,
-      },
-    ];
+  const usRegion = {
+    region: "United States",
+    enabled: true,
+    cost: this.isFreeShipping ? 0 : DEFAULT_US_RATE,
+  };
+
+  if (usIndex === -1) {
+    this.shippingRegions.push(usRegion);
   } else {
-    this.shippingRegions = this.shippingRegions.map((region) => {
-      if (region.region === "United States") {
-        return {
-          ...region,
-          enabled: true,
-          cost: this.isFreeShipping ? 0 : DEFAULT_US_RATE,
-        };
-      }
-      return region;
-    });
+    this.shippingRegions[usIndex] = {
+      ...this.shippingRegions[usIndex],
+      ...usRegion,
+    };
   }
 
   next();

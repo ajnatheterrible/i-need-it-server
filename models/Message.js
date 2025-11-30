@@ -19,6 +19,18 @@ const MessageSchema = new mongoose.Schema(
         return this.type !== "system";
       },
     },
+    actor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: function () {
+        if (this.type !== "system") return false;
+
+        const eventsRequiringActor = ["offer_accepted", "offer_declined"];
+
+        return eventsRequiringActor.includes(this.system?.event);
+      },
+    },
+
     type: {
       type: String,
       enum: ["text", "offer", "system"],
@@ -37,7 +49,7 @@ const MessageSchema = new mongoose.Schema(
       amount_cents: Number,
       status: {
         type: String,
-        enum: ["pending", "declined", "expired"],
+        enum: ["pending", "accepted", "declined", "expired"],
       },
       createdAt: { type: Date, default: Date.now },
     },

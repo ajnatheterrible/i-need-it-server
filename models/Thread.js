@@ -17,13 +17,18 @@ const ThreadSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    lastMessage: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message",
+    },
+    lastMessageAt: { type: Date, default: Date.now },
+
     isArchived: { type: Boolean, default: false },
     archivedReason: {
       type: String,
       enum: ["sold_to_other", "listing_deleted"],
       default: null,
     },
-    lastMessageAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
