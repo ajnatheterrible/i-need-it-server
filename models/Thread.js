@@ -17,23 +17,23 @@ const ThreadSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    messages: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Message",
-      },
-    ],
-    lastMessageAt: {
-      type: Date,
-      default: Date.now,
+    lastMessage: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message",
     },
-    isArchived: {
-      type: Boolean,
-      default: false,
+    lastMessageAt: { type: Date, default: Date.now },
+
+    isArchived: { type: Boolean, default: false },
+    archivedReason: {
+      type: String,
+      enum: ["sold_to_other", "listing_deleted"],
+      default: null,
     },
   },
   { timestamps: true }
 );
 
-const Thread = mongoose.model("Thread", ThreadSchema);
-export default Thread;
+ThreadSchema.index({ listing: 1, buyer: 1, seller: 1 }, { unique: true });
+ThreadSchema.index({ lastMessageAt: -1 });
+
+export default mongoose.model("Thread", ThreadSchema);

@@ -9,11 +9,14 @@ import errorHandler from "./middleware/errorHandler.js";
 import "./config/passport.js";
 
 import runCleanupJob from "./cron/cleanup.js";
+import "./cron/offerExpiryJob.js";
 import authRoutes from "./routes/authRoutes.js";
 import listingRoutes from "./routes/listingRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import marketRoutes from "./routes/marketRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import offerRoutes from "./routes/offerRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
 
 dotenv.config();
 
@@ -36,6 +39,8 @@ app.use("/api/listings", listingRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/market", marketRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/offers", offerRoutes);
+app.use("/api/messages", messageRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

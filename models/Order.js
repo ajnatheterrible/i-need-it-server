@@ -18,6 +18,12 @@ const OrderSchema = new mongoose.Schema(
       required: true,
     },
 
+    thread: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Thread",
+      default: null,
+    },
+
     status: {
       type: String,
       enum: ["PAID", "SHIPPED", "IN TRANSIT", "DELIVERED", "CANCELED"],
@@ -77,6 +83,16 @@ const OrderSchema = new mongoose.Schema(
       size: String,
       price_cents: Number,
       imageUrl: String,
+    },
+
+    escrow: {
+      cents: { type: Number, required: true },
+      status: {
+        type: String,
+        enum: ["HELD", "RELEASED"],
+        default: "HELD",
+      },
+      releasedAt: { type: Date, default: null },
     },
 
     orderId: { type: String, unique: true },
