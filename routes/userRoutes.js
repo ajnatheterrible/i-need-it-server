@@ -20,6 +20,7 @@ import {
   getPurchases,
   getPaymentMethods,
   getOrders,
+  getSold,
 } from "../controllers/userController.js";
 
 import requireAuth from "../middleware/requireAuth.js";
@@ -33,6 +34,7 @@ router.post("/favorites/:listingId", requireAuth, addFavorite);
 router.delete("/favorites/:listingId", requireAuth, removeFavorite);
 router.get("/for-sale", requireAuth, getForSale);
 router.get("/purchases", requireAuth, getPurchases);
+router.get("/sold", requireAuth, getSold);
 router.get("/is-username-available", requireAuth, isUsernameAvailable);
 router.get("/is-email-available", requireAuth, isEmailAvailable);
 router.get("/settings", requireAuth, getUserSettings);

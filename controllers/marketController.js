@@ -11,7 +11,9 @@ export const uploadImage = asyncHandler(async (req, res) => {
   if (!req.file)
     throw createError("No file uploaded or file type not allowed", 400);
 
-  const fileStr = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+  const fileStr = `data:${req.file.mimetype};base64,${req.file.buffer.toString(
+    "base64"
+  )}`;
 
   const uploaded = await cloudinary.uploader.upload(fileStr, {
     folder: "i-need-it-listings",
@@ -70,12 +72,18 @@ export const uploadListing = asyncHandler(async (req, res) => {
     throw createError("All fields are required", 400);
   }
 
-  const addressExists = user.settings.addresses.some(
-    (addr) => addr._id.toString() === formData.shippingFrom._id
-  );
+  if (!formData.isDraft) {
+    if (!formData.shippingFrom || !formData.shippingFrom._id) {
+      throw createError("Invalid shipping address selected.", 400);
+    }
 
-  if (!addressExists) {
-    throw createError("Invalid shipping address selected.", 400);
+    const addressExists = user.settings.addresses.some(
+      (addr) => addr._id.toString() === formData.shippingFrom._id
+    );
+
+    if (!addressExists) {
+      throw createError("Invalid shipping address selected.", 400);
+    }
   }
 
   const listing = await Listing.create(baseListing);
@@ -138,12 +146,18 @@ export const patchListing = asyncHandler(async (req, res) => {
     throw createError("All fields are required to update listing", 400);
   }
 
-  const addressExists = user.settings.addresses.some(
-    (addr) => addr._id.toString() === formData.shippingFrom._id
-  );
+  if (!formData.isDraft) {
+    if (!formData.shippingFrom || !formData.shippingFrom._id) {
+      throw createError("Invalid shipping address selected.", 400);
+    }
 
-  if (!addressExists) {
-    throw createError("Invalid shipping address selected.", 400);
+    const addressExists = user.settings.addresses.some(
+      (addr) => addr._id.toString() === formData.shippingFrom._id
+    );
+
+    if (!addressExists) {
+      throw createError("Invalid shipping address selected.", 400);
+    }
   }
 
   const updated = await Listing.findByIdAndUpdate(listingId, updatedFields, {

@@ -71,6 +71,15 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 500000,
     },
+    sellerReviewStats: {
+      ratingAverage: { type: Number, default: 0 },
+      ratingCount: { type: Number, default: 0 },
+      tagCounts: {
+        FAST_SHIPPER: { type: Number, default: 0 },
+        ITEM_AS_DESCRIBED: { type: Number, default: 0 },
+        QUICK_REPLIES: { type: Number, default: 0 },
+      },
+    },
     settings: {
       addresses: [
         {
@@ -193,13 +202,11 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       default: null,
     },
-
     pendingEmailToken: {
       type: String,
       index: true,
       default: null,
     },
-
     pendingEmailExpires: {
       type: Date,
       default: null,
