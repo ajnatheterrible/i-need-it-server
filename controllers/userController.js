@@ -136,6 +136,24 @@ export const getOrders = asyncHandler(async (req, res) => {
   res.status(200).json(orders);
 });
 
+export const getSold = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  const orders = await Order.find({ seller: user._id })
+    .select(
+      "_id listing buyer status createdAt trackingNumber price shippingAddress shippingFrom escrow"
+    )
+    .populate("listing", "title price designer size thumbnail")
+    .populate("buyer", "username")
+    .lean();
+
+  if (!orders.length) {
+    return res.status(200).json([]);
+  }
+
+  res.status(200).json(orders);
+});
+
 export const updatePrivacySettings = asyncHandler(async (req, res) => {
   const user = req.user;
   const { location, privacy } = req.body;

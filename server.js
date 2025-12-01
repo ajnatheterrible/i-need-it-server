@@ -17,6 +17,7 @@ import marketRoutes from "./routes/marketRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import offerRoutes from "./routes/offerRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use("/api/market", marketRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/offers", offerRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
