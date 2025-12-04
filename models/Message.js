@@ -30,7 +30,6 @@ const MessageSchema = new mongoose.Schema(
         return eventsRequiringActor.includes(this.system?.event);
       },
     },
-
     type: {
       type: String,
       enum: ["text", "offer", "system"],
@@ -64,6 +63,7 @@ const MessageSchema = new mongoose.Schema(
           "order_in_transit",
           "order_delivered",
           "payout_released",
+          "refund_issued",
         ],
       },
       data: mongoose.Schema.Types.Mixed,

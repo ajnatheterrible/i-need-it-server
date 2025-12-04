@@ -95,6 +95,20 @@ const OrderSchema = new mongoose.Schema(
       releasedAt: { type: Date, default: null },
     },
 
+    refund: {
+      mode: {
+        type: String,
+        enum: ["full", "partial"],
+      },
+      amount_cents: Number,
+      fee_cents: Number,
+      sellerDebit_cents: Number,
+      reason: String,
+      note: String,
+      issuedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      issuedAt: Date,
+    },
+
     orderId: { type: String, unique: true },
 
     createdAt: {

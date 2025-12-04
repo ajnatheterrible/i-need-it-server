@@ -269,6 +269,16 @@ export const simulateOrderStatus = asyncHandler(async (req, res) => {
         }
       }
 
+      const wasRefunded = !!order.refund && !!order.refund.issuedAt;
+      const wasDelivered =
+        order.status === "DELIVERED" ||
+        order.statusHistory?.some((h) => h.status === "DELIVERED");
+
+      if (wasRefunded && !wasDelivered) {
+        updatedOrder = order;
+        return;
+      }
+
       const flow = ["PAID", "SHIPPED", "DELIVERED"];
       const currentIndex = flow.indexOf(order.status);
       if (currentIndex === -1) throw createError("Invalid order status", 409);
@@ -470,4 +480,236 @@ export const verifyOrderZip = asyncHandler(async (req, res) => {
   return res
     .status(400)
     .json({ success: false, message: "Invalid postal code" });
+});
+
+const REFUND_REASONS = [
+  "I no longer have this item",
+  "I don't ship internationally",
+  "I don't want to sell it anymore",
+  "It is damaged",
+  "Buyer had incorrect address",
+  "The buyer requested a refund",
+  "I am traveling or busy",
+  "Other",
+];
+
+const PRE_SHIP_REASONS = [
+  "I no longer have this item",
+  "I don't ship internationally",
+  "I don't want to sell it anymore",
+];
+
+export const issueRefund = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { id: orderId } = req.params;
+  const { mode = "full", amount, reason = "", note = "" } = req.body || {};
+
+  if (!user?._id) throw createError("Unauthorized", 401);
+  if (!orderId) throw createError("Missing order ID", 400);
+
+  if (!reason || typeof reason !== "string")
+    throw createError("Refund reason is required", 400);
+  if (!REFUND_REASONS.includes(reason))
+    throw createError("Invalid refund reason", 400);
+
+  const session = await mongoose.startSession();
+  let updatedOrder;
+
+  try {
+    await session.withTransaction(async () => {
+      const order = await Order.findById(orderId).session(session);
+      if (!order) throw createError("Order not found", 404);
+
+      const isSeller = String(order.seller) === String(user._id);
+      if (!isSeller)
+        throw createError("Only the seller can issue a refund", 403);
+
+      if (order.refund && order.refund.issuedAt) {
+        throw createError("Refund already issued for this order", 400);
+      }
+
+      const hasShipped =
+        order.status === "SHIPPED" ||
+        order.status === "DELIVERED" ||
+        order.statusHistory?.some((h) =>
+          ["SHIPPED", "DELIVERED"].includes(h.status)
+        );
+
+      if (hasShipped && PRE_SHIP_REASONS.includes(reason)) {
+        throw createError(
+          "This refund reason is only valid before the item has shipped",
+          400
+        );
+      }
+
+      const total_cents = order.total_cents || 0;
+      if (total_cents <= 0) throw createError("Nothing to refund", 400);
+
+      let refund_cents;
+      if (mode === "full") {
+        refund_cents = total_cents;
+      } else if (mode === "partial") {
+        const parsed = parseFloat(String(amount));
+        if (!parsed || parsed <= 0)
+          throw createError("Invalid refund amount", 400);
+        refund_cents = Math.round(parsed * 100);
+        if (refund_cents > total_cents)
+          throw createError("Refund amount exceeds total paid", 400);
+      } else {
+        throw createError("Invalid refund mode", 400);
+      }
+
+      const listingPrice = order.price?.listingPrice || 0;
+      const shipping = order.price?.shipping || 0;
+      const tax = order.price?.tax || 0;
+      const listingCents = Math.round(listingPrice * 100);
+      const shippingCents = Math.round(shipping * 100);
+      const taxCents = Math.round(tax * 100);
+      const fee = Math.round(listingCents * 0.09);
+      const sellerNet = Math.max(
+        0,
+        listingCents - fee - shippingCents - taxCents
+      );
+
+      const escrowReleased = order.escrow && order.escrow.status === "RELEASED";
+
+      let sellerDebit = 0;
+      if (escrowReleased) {
+        sellerDebit = Math.min(refund_cents, sellerNet);
+      }
+
+      await User.updateOne(
+        { _id: order.buyer },
+        { $inc: { virtualBalanceCents: refund_cents } },
+        { session }
+      );
+
+      if (sellerDebit > 0) {
+        await User.updateOne(
+          { _id: order.seller },
+          { $inc: { virtualBalanceCents: -sellerDebit } },
+          { session }
+        );
+      }
+
+      const now = new Date();
+
+      const wasDelivered =
+        order.status === "DELIVERED" ||
+        order.statusHistory?.some((h) => h.status === "DELIVERED");
+
+      if (!wasDelivered && refund_cents === total_cents) {
+        order.status = "CANCELED";
+        order.statusHistory.push({ status: "CANCELED", updatedAt: now });
+      }
+
+      order.refund = {
+        mode,
+        amount_cents: refund_cents,
+        fee_cents: fee,
+        sellerDebit_cents: sellerDebit,
+        reason,
+        note,
+        issuedBy: user._id,
+        issuedAt: now,
+      };
+
+      const [refundMsg] = await Message.create(
+        [
+          {
+            listing: order.listing,
+            thread: order.thread,
+            type: "system",
+            system: {
+              event: "refund_issued",
+              data: {
+                orderId: order._id,
+                buyer: order.buyer,
+                seller: order.seller,
+                amount_cents: refund_cents,
+                mode,
+                reason,
+              },
+            },
+            readBy: [{ user: user._id, at: now }],
+          },
+        ],
+        { session }
+      );
+
+      if (order.thread) {
+        await Thread.findByIdAndUpdate(
+          order.thread,
+          { lastMessage: refundMsg._id, lastMessageAt: refundMsg.createdAt },
+          { session }
+        );
+      }
+
+      await order.save({ session });
+      updatedOrder = order;
+    });
+
+    const hydratedOrder = await Order.findById(updatedOrder._id)
+      .populate("buyer", "username email")
+      .populate("seller", "username email")
+      .populate("listing");
+
+    return res.status(200).json({
+      message: "Refund issued successfully",
+      order: hydratedOrder,
+    });
+  } finally {
+    session.endSession();
+  }
+});
+
+export const priceDropListing = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { listingId, newPrice, discountPercent } = req.body || {};
+
+  if (!user?._id) throw createError("Unauthorized", 401);
+  if (!listingId) throw createError("Listing ID is required", 400);
+
+  const listing = await Listing.findById(listingId);
+  if (!listing) throw createError("Listing not found", 404);
+
+  if (String(listing.seller) !== String(user._id)) {
+    throw createError("You can only edit your own listings", 403);
+  }
+
+  if (listing.isSold || listing.isDeleted || listing.isDraft) {
+    throw createError("Listing is not active", 400);
+  }
+
+  const parsed =
+    typeof newPrice === "string" ? parseFloat(newPrice) : Number(newPrice);
+
+  if (!parsed || parsed <= 0) {
+    throw createError("A valid new price is required", 400);
+  }
+
+  if (parsed >= listing.price) {
+    throw createError("New price must be lower than current price", 400);
+  }
+
+  if (typeof listing.originalPrice !== "number" || listing.originalPrice <= 0) {
+    listing.originalPrice = listing.price;
+  }
+
+  const oldPrice = listing.price;
+  listing.price = parsed;
+
+  await listing.save();
+  await upsertListingToMeili(listing);
+
+  const appliedDiscount =
+    typeof discountPercent === "number"
+      ? discountPercent
+      : Math.round(((oldPrice - parsed) / oldPrice) * 100);
+
+  res.status(200).json({
+    message: "Price updated",
+    listing,
+    discountPercent: appliedDiscount,
+  });
 });

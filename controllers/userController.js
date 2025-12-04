@@ -141,7 +141,7 @@ export const getSold = asyncHandler(async (req, res) => {
 
   const orders = await Order.find({ seller: user._id })
     .select(
-      "_id listing buyer status createdAt trackingNumber price shippingAddress shippingFrom escrow"
+      "_id listing buyer status createdAt trackingNumber price shippingAddress shippingFrom escrow refund"
     )
     .populate("listing", "title price designer size thumbnail")
     .populate("buyer", "username")
